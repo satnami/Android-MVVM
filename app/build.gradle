@@ -21,6 +21,10 @@ android {
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'LICENSE.txt'
@@ -51,17 +55,12 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-databind:$JACKSON_VERSION"
 
 
-
-
-
-
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     apt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
     testCompile 'junit:junit:4.12'
-    compile 'javax.validation:validation-api:1.1.0.CR2'
-    compile 'javax.annotation:jsr250-api:1.0'
+
     compile 'com.squareup.sqlbrite:sqlbrite:0.2.1'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.retrofit:converter-jackson:1.9.0'

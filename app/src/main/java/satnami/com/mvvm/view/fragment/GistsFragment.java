@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,20 +113,14 @@ public class GistsFragment extends Fragment {
 
     private void loadStoriesIfNetworkConnected() {
         if (NetworkUtils.isNetworkAvailable(getActivity())) {
-            if (GitHubService.ACCESS_TOKEN.isEmpty()) {
+            if (GitHubService.ACCESS_TOKEN.isEmpty() || GitHubService.USERNAME.isEmpty())
                 getTopGists();
-            } else {
-                getUserGists();
-            }
+            else getUserGists();
         }
     }
 
     private void getTopGists() {
-
-    }
-
-    private void getUserGists() {
-        compositeSubscription.add(dataManager.getGists()
+        compositeSubscription.add(dataManager.getTopGists()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(dataManager.getScheduler())
                 .subscribe(new Subscriber<List<Gist>>() {
@@ -142,9 +137,33 @@ public class GistsFragment extends Fragment {
 
                     @Override
                     public void onNext(List<Gist> gists) {
+                        Log.e("latest", "" + gists.size());
                         gistAdapter.addItems(gists);
                     }
                 }));
     }
 
+    private void getUserGists() {
+        compositeSubscription.add(dataManager.getUserGists()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(dataManager.getScheduler())
+                .subscribe(new Subscriber<List<Gist>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Timber.e("There was a problem loading the user stories " + e);
+                        Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(List<Gist> gists) {
+                        Log.e("user", "" + gists.size());
+                        gistAdapter.addItems(gists);
+                    }
+                }));
+    }
 }

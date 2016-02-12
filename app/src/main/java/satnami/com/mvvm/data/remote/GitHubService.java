@@ -22,7 +22,15 @@ public interface GitHubService {
     /**
      * @return list of Gists
      */
-    @GET("users" + USERNAME + "/gists?access_token=" + ACCESS_TOKEN)
-    Observable<List<Gist>> getGists();
+    @GET("/users" + USERNAME + "/gists?access_token=" + ACCESS_TOKEN)
+    Observable<List<Gist>> getUserGists();
+
+    /**
+     * @return list of Latest Gists
+     */
+    @GET("/gists")
+    Observable<List<Gist>> getTopGists();
+
+
 
 }

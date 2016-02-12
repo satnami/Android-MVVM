@@ -16,23 +16,35 @@ public class GistViewModel extends BaseObservable {
     private Gist gist;
 
     public GistViewModel(Context mContext, Gist mGist) {
-        context = mContext;
-        gist = mGist;
+        this.context = mContext;
+        this.gist = mGist;
+        getGistUrl();
+        getGistDescription();
     }
 
-    public String GetGistId() {
-        return gist.getId();
+    public String getGistUrl() {
+        if (this.gist.getUrl() != null && !this.gist.getUrl().isEmpty()) {
+            return this.gist.getUrl();
+        }
+        return "no url";
     }
 
-    public String getPostAuthor(){
-        return gist.getUser().toString();
+    public String getGistDescription() {
+        if (this.gist.getDescription() != null && !this.gist.getDescription().isEmpty()) {
+            return this.gist.getDescription();
+        }
+        return "no description";
     }
 
-    public View.OnClickListener OnClickName() {
+    public View.OnClickListener OnClickItem() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Lunch this", Toast.LENGTH_SHORT).show();
+                String id = "no Id";
+                if (gist.getId() != null && !gist.getId().isEmpty()) {
+                    id = gist.getId();
+                }
+                Toast.makeText(context, "Gist Id: " + id, Toast.LENGTH_SHORT).show();
             }
         };
     }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import satnami.com.mvvm.R;
-import satnami.com.mvvm.databinding.ItemGistBinding;
+import satnami.com.mvvm.databinding.SampleBinding;
 import satnami.com.mvvm.model.Gist;
 import satnami.com.mvvm.viewModel.GistViewModel;
 
@@ -29,9 +29,9 @@ public class GistAdapter extends RecyclerView.Adapter<GistAdapter.BindingHolder>
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemGistBinding itemPostBinding = DataBindingUtil.inflate(
+        SampleBinding itemPostBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
-                R.layout.item_gist,
+                R.layout.sample,
                 parent,
                 false);
         return new BindingHolder(itemPostBinding);
@@ -40,8 +40,8 @@ public class GistAdapter extends RecyclerView.Adapter<GistAdapter.BindingHolder>
 
     @Override
     public void onBindViewHolder(BindingHolder holder, int position) {
-        ItemGistBinding itemGistBinding = holder.itemGistBinding;
-        itemGistBinding.setViewModel(new GistViewModel(context, gists.get(position)));
+        SampleBinding itemGistBinding = holder.itemGistBinding;
+        itemGistBinding.setData(new GistViewModel(context, gists.get(position)));
     }
 
     @Override
@@ -70,9 +70,9 @@ public class GistAdapter extends RecyclerView.Adapter<GistAdapter.BindingHolder>
     }
 
     public static class BindingHolder extends RecyclerView.ViewHolder {
-        private ItemGistBinding itemGistBinding;
+        private SampleBinding itemGistBinding;
 
-        public BindingHolder(ItemGistBinding mItemGistBinding) {
+        public BindingHolder(SampleBinding mItemGistBinding) {
             super(mItemGistBinding.cardView);
             this.itemGistBinding = mItemGistBinding;
         }
